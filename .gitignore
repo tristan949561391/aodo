@@ -62,3 +62,9 @@ typings/
 .env
 
 
+.idea/aodo.iml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/watcherTasks.xml
+.idea/workspace.xml

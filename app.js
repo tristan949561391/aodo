@@ -8,12 +8,19 @@ const convert = require('koa-convert');
 const cors = require('koa2-cors');
 const UnckeckError = require("./error/index").UnckeckError;
 const connInit = require("./core/conn");
+const route=require('./core/plugin');
+const path=require('path');
 
 //-------midleware
 module.exports.appCallback = async () => {
     let app = new Koa();
     app.mongo = await connInit.getMongo();
     app.redis = await connInit.getRedis();
+    let routesFile=await route.getRouteFiles(path.join(__dirname,'route'))
+    routesFile.forEach(rout=>{
+        let r=require(rout.path);
+        app.use(r.routes()).use(r.allowedMethods())
+    })
     app.use(bodyparser());
     app.use(Logger());
     app.use(cors());

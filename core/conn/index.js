@@ -20,13 +20,13 @@ module.exports.getRedis = () => {
     return new Promise((resolve, reject) => {
         const client = redis.createClient(CONF.REDIS.port, CONF.REDIS.host, CONF.REDIS.options);
         client.on('connect', () => {
-            console.log(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接成功`)
+            console.log(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接成功`);
             resolve(client);
         });
         client.on("error", function (err) {
-            console.error(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接失败，原因：${err.message}`)
+            console.error(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接失败，原因：${err.message}`);
             reject(err);
         });
     })
-}
+};
 
