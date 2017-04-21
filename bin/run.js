@@ -1,14 +1,14 @@
 const http = require('http');
 const SERVER = require('../conf').SERVER;
-const Server = require("../app");
-
+const app = require("../app");
 
 async function run() {
-    let callback = await Server.appCallback();
-    http.createServer(callback).listen(SERVER.port, () => {
+    http.createServer(app.callback()).listen(SERVER.port, () => {
         console.log(`服务器启动成功：端口${SERVER.port}`)
     })
 }
-run()
-
-
+run();
+process.on('uncaughtException', function (err) {
+    console.error(err.stack);
+    console.log("Node NOT Exiting...");
+});

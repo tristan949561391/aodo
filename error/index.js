@@ -21,7 +21,6 @@ function BusinessError(code, message) {
 BusinessError.prototype = Object.create(Error.prototype);
 BusinessError.prototype.constructor = BusinessError;
 
-
 function UnckeckError(code, message) {
     this.name = 'Unckeck error';
     this.code = code || 500;
@@ -33,8 +32,19 @@ UnckeckError.prototype = Object.create(Error.prototype);
 UnckeckError.prototype.constructor = UnckeckError;
 
 
+function NotFound(code, message) {
+    this.name = 'Unckeck error';
+    this.code = code || 500;
+    this.message = message || 'notFound';
+    this.stack = (new Error()).stack;
+}
+
+NotFound.prototype = Object.create(Error.prototype);
+NotFound.prototype.constructor = NotFound;
+
 module.exports = {
     ParamError,
     BusinessError,
-    UnckeckError
-}
+    UnckeckError,
+    NotFound
+};

@@ -6,7 +6,7 @@ module.exports.SERVER = {
 };
 
 module.exports.MONGODB = {
-    url: 'mongodb://localhost/auth',
+    url: 'mongodb://moondust.cc/auth',
     options: {
         // db: {native_parser: true},
         // server: {poolSize: 5},
@@ -15,7 +15,6 @@ module.exports.MONGODB = {
         // pass: 'myPassword'
     }
 };
-
 
 module.exports.REDIS = {
     host: 'localhost',

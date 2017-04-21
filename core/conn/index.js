@@ -1,32 +1,29 @@
 const CONF = require('../../conf/index');
-const MongoClient = require('mongodb').MongoClient;
 const redis = require("redis");
-module.exports.getMongo = () => {
-    return new Promise((resolve, reject) => {
-        MongoClient.connect(CONF.MONGODB.url, function (err, db) {
-            if (!err) {
-                console.log(`mongodb数据库：${CONF.MONGODB.url}连接成功`);
-                resolve(db);
-            } else {
-                console.log(`mongodb数据库：${CONF.MONGODB.url}连接失败,原因:${err.message}`);
-                reject(err);
-            }
-        });
-    });
-};
+const mongoose=require('mongoose');
 
 
-module.exports.getRedis = () => {
-    return new Promise((resolve, reject) => {
-        const client = redis.createClient(CONF.REDIS.port, CONF.REDIS.host, CONF.REDIS.options);
-        client.on('connect', () => {
-            console.log(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接成功`);
-            resolve(client);
-        });
-        client.on("error", function (err) {
-            console.error(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接失败，原因：${err.message}`);
-            reject(err);
-        });
-    })
-};
+
+const client = redis.createClient(CONF.REDIS.port, CONF.REDIS.host, CONF.REDIS.options);
+client.on('connect', () => {
+    console.log(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接成功`);
+});
+client.on("error", function (err) {
+    console.error(`redis 数据库:${CONF.REDIS.host}:${CONF.REDIS.port}连接失败，原因：${err.message}`);
+});
+module.exports.redis = client;
+
+
+mongoose.Promise = global.Promise;
+const mongo = mongoose.createConnection(CONF.MONGODB.url, CONF.MONGODB.options);
+mongo.once('open', function () {
+    console.log(`mongodb数据库连接成功${CONF.MONGODB.url}`)
+
+});
+mongo.on('error', function () {
+    console.error('mongo 数据库连接失败');
+});
+module.exports.mongo = mongo;
+
+
 

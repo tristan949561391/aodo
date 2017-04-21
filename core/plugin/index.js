@@ -5,15 +5,9 @@ const fs = require('fs');
 const pt = require('path');
 
 module.exports.getRouteFiles = (path) => {
-    return new Promise((resolve, reject) => {
-        try {
-            let filesList = [];
-            readFile(path, filesList);
-            resolve(filesList);
-        } catch (e) {
-            reject(e)
-        }
-    })
+    let filesList = [];
+    readFile(path, filesList);
+    return filesList
 };
 
 //遍历读取文件
